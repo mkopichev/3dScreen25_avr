@@ -1,0 +1,10 @@
+{
+    "AVR.source.compiler": "C:\\Users\\GET-5\\Programming\\avr-gcc-12.1.0-x86-windows\\bin\\avr-gcc.exe",
+    "AVR.programmer.tool": "C:\\Users\\GET-5\\Programming\\avr-gcc-12.1.0-x86-windows\\bin\\avrdude.exe",
+    "AVR.source.libraries": [],
+    "AVR.device.type": "atmega8a",
+    "AVR.device.frequency": 11059200,
+    "AVR.programmer.type": "usbasp",
+    "AVR.programmer.port": "USB",
+    "AVR.programmer.rate": 115200
+}
