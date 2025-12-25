@@ -7,12 +7,12 @@ int main(void) {
     rgbColor_t blue = {.red = 0, .green = 0, .blue = 255};
     rgbColor_t noColor = {.red = 0, .green = 0, .blue = 0};
 
-    uint8_t picture[LED_QUANTITY] = {
+    bool picture[LED_QUANTITY] = {
         0, 0, 1, 1, 1, 1, 0, 0,
         0, 1, 0, 0, 0, 0, 1, 0,
         1, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 0, 0, 0, 0, 0, 1,
-        1, 0, 0, 0, 0, 0, 0, 1,
+        1, 0, 0, 1, 1, 0, 0, 1,
+        1, 0, 0, 1, 1, 0, 0, 1,
         1, 0, 0, 0, 0, 0, 0, 1,
         0, 1, 0, 0, 0, 0, 1, 0,
         0, 0, 1, 1, 1, 1, 0, 0};

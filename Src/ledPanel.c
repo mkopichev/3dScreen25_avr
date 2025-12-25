@@ -111,7 +111,7 @@ void timer0Init(void) {
     timer0InitDone = true;
 }
 
-uint8_t tmpPicture[LED_QUANTITY] = {0};
+bool tmpPicture[LED_QUANTITY] = {0};
 
 void ledPanelDrawPictureGlowing(uint8_t *picture) {
 
