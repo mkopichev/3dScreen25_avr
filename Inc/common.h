@@ -5,9 +5,11 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <stdbool.h>
+#include <string.h>
 #include <avr/cpufunc.h>
 #include "ledPanel.h"
 #include "serviceLed.h"
+#include "animation.h"
 
 #define OUT                             true
 #define IN                              false
@@ -17,5 +19,7 @@
 #define OFF                             false
 #define SET_PIN_MODE(ddr, pin, mode)    mode ? (ddr |= (1 << pin)) : (ddr &= ~(1 << pin))
 #define SET_PIN_LEVEL(port, pin, level) level ? (port |= (1 << pin)) : (port &= ~(1 << pin))
+
+bool *getPicture(uint8_t index);
 
 #endif

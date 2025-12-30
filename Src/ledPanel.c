@@ -1,5 +1,6 @@
 #include "../Inc/ledPanel.h"
 
+bool tmpPicture[LED_QUANTITY] = {0};
 bool timer0InitDone = false;
 volatile uint8_t hue = 0;
 rgbColor_t noColor = {.red = 0, .green = 0, .blue = 0};
@@ -8,6 +9,7 @@ void ledPanelInit(void) {
 
     SET_PIN_MODE(DDRD, 6, OUT); // PD6 is IN of RGB panel
     ledPanelClear();
+    ledPanelGlowing();
 }
 
 void zeros(void) {
@@ -105,20 +107,13 @@ void hueToRgb(uint8_t hue) {
 
 void timer0Init(void) {
 
-    TCCR0 |= (1 << CS00) | (1 << CS02);
+    TCCR0 = (1 << CS00) | (1 << CS02);
     TIMSK |= (1 << TOIE0);
     sei();
     timer0InitDone = true;
 }
 
-bool tmpPicture[LED_QUANTITY] = {0};
-
-void ledPanelDrawPictureGlowing(uint8_t *picture) {
-
-    for(int8_t pos = LED_QUANTITY - 1; pos >= 0; pos--) {
-
-        tmpPicture[pos] = picture[pos];
-    }
+void ledPanelGlowing(void) {
 
     if(!timer0InitDone) {
 

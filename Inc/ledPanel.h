@@ -17,6 +17,5 @@ void ledPanelSetSingle(rgbColor_t color);
 void ledPanelSetFull(rgbColor_t color);
 void ledPanelClear(void);
 void ledPanelDrawPicture(uint8_t *picture, rgbColor_t color);
-void ledPanelDrawPictureGlowing(uint8_t *picture);
 
 #endif
