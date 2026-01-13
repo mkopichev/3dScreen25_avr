@@ -1,6 +1,6 @@
 #include "../Inc/animation.h"
 
-extern bool tmpPicture[LED_QUANTITY];
+extern uint8_t tmpPicture[8];
 
 bool timer1InitDone = false;
 
@@ -35,10 +35,13 @@ ISR(TIMER1_OVF_vect) { // 400 Hz
 
     static uint8_t framesCounter = 0;
 
-    memcpy(tmpPicture, getPicture(framesCounter), LED_QUANTITY * sizeof(bool));
+    memcpy(tmpPicture, getPicture(framesCounter), 8 * sizeof(uint8_t));
 
-    if(framesCounter++ > 19) {
+    if(framesCounter > 19) {
 
         framesCounter = 0;
+    } else {
+
+        framesCounter++;
     }
 }

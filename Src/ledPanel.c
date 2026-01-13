@@ -1,6 +1,6 @@
 #include "../Inc/ledPanel.h"
 
-bool tmpPicture[LED_QUANTITY] = {0};
+uint8_t tmpPicture[8] = {0};
 bool timer0InitDone = false;
 volatile uint8_t hue = 0;
 rgbColor_t noColor = {.red = 0, .green = 0, .blue = 0};
@@ -15,7 +15,6 @@ void ledPanelInit(void) {
 void zeros(void) {
 
     SET_PIN_LEVEL(PORTD, 6, HIGH);
-    _NOP();
     _NOP();
     SET_PIN_LEVEL(PORTD, 6, LOW);
     _NOP();
@@ -33,22 +32,21 @@ void ones(void) {
     _NOP();
     SET_PIN_LEVEL(PORTD, 6, LOW);
     _NOP();
-    _NOP();
 }
 
 void ledPanelSetSingle(rgbColor_t color) {
 
-    for(uint8_t i = 0b10000000; i >= 0b00000001; i = i >> 1) {
+    for(uint8_t i = 0b10000000; i >= 0b00000001; i >>= 1) {
 
         ((color.green & i) > 0) ? ones() : zeros();
     }
 
-    for(uint8_t i = 0b10000000; i >= 0b00000001; i = i >> 1) {
+    for(uint8_t i = 0b10000000; i >= 0b00000001; i >>= 1) {
 
         ((color.red & i) > 0) ? ones() : zeros();
     }
 
-    for(uint8_t i = 0b10000000; i >= 0b00000001; i = i >> 1) {
+    for(uint8_t i = 0b10000000; i >= 0b00000001; i >>= 1) {
 
         ((color.blue & i) > 0) ? ones() : zeros();
     }
@@ -64,7 +62,7 @@ void ledPanelSetFull(rgbColor_t color) {
 
 void ledPanelClear(void) {
 
-    for(uint8_t i = 0; i < LED_QUANTITY; i++) {
+    for(uint8_t pos = 0; pos < LED_QUANTITY; pos++) {
 
         ledPanelSetSingle(noColor);
     }
@@ -73,14 +71,17 @@ void ledPanelClear(void) {
 
 void ledPanelDrawPicture(uint8_t *picture, rgbColor_t color) {
 
-    for(int8_t pos = LED_QUANTITY - 1; pos >= 0; pos--) {
+    for(int8_t pos = 7; pos >= 0; pos--) {
 
-        if(picture[pos]) {
+        for(uint8_t i = 0; i <= 7; i++) {
 
-            ledPanelSetSingle(color);
-        } else {
+            if(picture[pos] & (1 << i)) {
 
-            ledPanelSetSingle(noColor);
+                ledPanelSetSingle(color);
+            } else {
+
+                ledPanelSetSingle(noColor);
+            }
         }
     }
 }
@@ -124,14 +125,18 @@ void ledPanelGlowing(void) {
 ISR(TIMER0_OVF_vect) { // 23 ms period
 
     hue += 1;
-    for(int8_t pos = LED_QUANTITY - 1; pos >= 0; pos--) {
 
-        if(tmpPicture[pos]) {
+    for(int8_t pos = 7; pos >= 0; pos--) {
 
-            hueToRgb(hue + pos);
-        } else {
+        for(uint8_t i = 0; i <= 7; i++) {
 
-            ledPanelSetSingle(noColor);
+            if(tmpPicture[pos] & (1 << i)) {
+
+                hueToRgb(hue + pos);
+            } else {
+
+                ledPanelSetSingle(noColor);
+            }
         }
     }
 }

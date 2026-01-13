@@ -9,7 +9,7 @@
             "includePath": [],
             "compilerArgs": [
                 "-g",
-                "-Os",
+                "-o0",
                 "-Wall",
                 "-Wextra",
                 "-fpermissive",
